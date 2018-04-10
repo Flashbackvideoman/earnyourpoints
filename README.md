@@ -8,15 +8,15 @@ I. Installation
 Download the zip file from the archive and place the root directory from the zip file into your base www directory.
 
 If necessary, edit the file js/loyalty_globals.inc to change the following defaults:
-    $db = "loyaltydb";
-    $con = mysqli_connect("localhost", "root", "");
-    $DEVELOPMENT = false; *
+-    $db = "loyaltydb";
+-    $con = mysqli_connect("localhost", "root", "");
+-   $DEVELOPMENT = false; *
  
-*Note that the $DEVELOPMENT variable, if TRUE will turn off PHP warnings like mail errors if you do not have a working SMTP driver.*
+ &ast;Note that the $DEVELOPMENT variable, if TRUE will turn off PHP warnings like mail errors if you do not have a working SMTP driver.*
 
 Requirements:
-LAMP or WAMP stack
-SMTP services
+- LAMP or WAMP stack
+- SMTP services
 
 **Warning: SMTP server MUST be setup to successfully send mail via PHP**
 
