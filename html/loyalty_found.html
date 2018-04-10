@@ -3,6 +3,9 @@
 <div id="userinfo" style="text-align: center;">
     <h2 id="welcome"></h2>
     <h3>Here is the information we have to date:</h3>
+    <form id="userfoundform">
+        <input type="hidden" name="addnewpoints" id="addnewpoints" value="0" />
+        <input type="hidden" name="timestamp" id="timestamp" />
         <table style="margin: 0 auto;"><tbody>
             <tr>
                 <td class="rightset">First name:</td><td><input type="text" id="firstname" readonly/></td>
@@ -14,19 +17,20 @@
                 <td class="rightset">Email Address:</td><td><input type="text" id="email" readonly/></td>
             </tr>
             <tr>
-                <td class="rightset">Phone:</td><td><input type="text" id="phone" readonly/></td>
+                <td class="rightset">Phone:</td><td><input type="text" id="phone" name="phone" readonly/></td>
                 <td>&nbsp;&nbsp;&nbsp;</td>
                 <td class="rightset">Last Login:</td><td><input type="text" id="lastlogin" readonly/></td> 
             </tr>
          </tbody></table>        
-
+    </form>
     <div id="comebackin" style="display:none; color: red; margin-top:30px;font-size: 1.1em;">You must wait at least 5 minutes before you can accumulate another 20 points.<br \>
         Come back in <strong><span></span></strong> minutes or more.
     </div>
-    <div style="margin-top:15px;font-size: 1.3em;">You have accumulated <span id="thepoints"></span> point(s)!</div>
+    <div style="margin-top:15px;font-size: 1.3em;">
+        You have accumulated <span id="thepoints"></span> point(s) in <span id="thevisits"></span> successful logins</div>
     
     <div class="centerdiv" style="margin-top: 20px;">
-        <input class="widebtn" type="button" value="Enter a different phone number" onclick="loyalty_js_init()" />
+        <input class="widebtn" type="button" value="Enter a another phone number" onclick="loyalty_js_init()" />
     </div>    
     
 </div>

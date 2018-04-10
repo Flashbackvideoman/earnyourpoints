@@ -22,33 +22,35 @@ var userInfo;
 /* load up first screen */
 function loyalty_js_init() {
     if(theTimer) {
-        
+        clearInterval(theTimer);
+        theTimer=null;
     }
     
     $.get("html/loyalty_search.html", {}, function(data) {
-        $("#page").fade(250, function() {
-            $("page").html(data).fadeIn(250, function() {
-                
-
-            $("#phonenum").get(0).focus();
-            $("#phonenum").on("keyup", function(e) {
-                if(e.keyCode === 13) {
-                    var p=this.value;
-                    if( (p = validatePhone(p, this)) !== "") {
-                        processPhone(p);
-                    } else {
-                         alert("bad phone");
+        $("#page").fadeOut(250).promise()
+        .done( function() {
+            $("#page").html(data);  
+            $("#page").fadeIn(250).promise()
+            .done( function() {
+                $("#phonenum").get(0).focus();
+                $("#phonenum").on("keyup", function(e) {
+                    if(e.keyCode === 13) {
+                        var p=this.value;
+                        if( (p = validatePhone(p, this)) !== "") {
+                            processPhone(p);
+                        } else {
+                             alert("bad phone");
+                        }
                     }
-                }
-            });
-}); 
+                });            
+            }); 
         });
     });
 }
 
 /* Lookup initial phone number */
 function processPhone(phone) {
-    $.post("loyalty_procs.php", {"phonenumber" : phone}, function(data) {
+    $.post( document.location.href + "js/loyalty_procs.php", {"phone" : phone}, function(data) {
         if(data.trim() === "") {
             userNotFound(phone);
         } else {
@@ -62,50 +64,67 @@ function processPhone(phone) {
 function userNotFound(phone) {
     // load up input screen
     $.get("html/loyalty_new.html", {}, function(data) {
-        $("#page").html(data);   
-        $("#getinfo #phone").val(phone);
-        $("#firstname").get(0).focus();
+        $("#page").fadeOut(250).promise()
+        .done( function() {
+            $("#page").html(data);
+            $("#getinfo #phone").val(phone);
+            $("#page").fadeIn(250, function() {
+                $("#firstname").get(0).focus();
+            });   
+            
+        });        
     });
 }
 
 /* user already in database */
 function userFound(info) {
+    var newPointsOk=false;
     // load up found screen
     clearInterval(theTimer);
     $.post("html/loyalty_found.html", {}, function(data) {
-        $("#page").html(data); 
-        $("#logo img").attr("src", "css/images/logged-button.png");
-        $("#logo span").html("Welcome Back!");
-        $("#userinfo #firstname").val(info[dbFIRSTNAME]);
-        $("#userinfo #lastname").val(info[dbLASTNAME]);
-        $("#userinfo #email").val(info[dbEMAIL]);
-        $("#userinfo #phone").val(info[dbPHONE]);
-        $("#userinfo #thepoints").html(info[dbPOINTS]);
-        
-        var ts = parseInt(info[dbLASTLOGIN],10)*1000;
-        $("#userinfo #lastlogin").prop("readonly", false).val(formatDate(ts)).prop("readonly", true);
-        var datediff = Date.now() - ts;
-        if( datediff < comeBackIn /*300000*/) {
-            var t = Math.floor((comeBackIn - datediff) / 60000);
-            $("#userinfo #comebackin").show();
-            $("#userinfo #comebackin span").html(t);
-            theTimer = setInterval(function(){updateComeback();}, 60000 );
-        } else {
-            
-        }        
-        
+        $("#page").fadeOut(250).promise()
+        .done(function() {
+            $("#page").html(data);
+                $("#logo img").attr("src", "css/images/logged-button.png");
+                $("#logo span").html("Welcome Back!");
+                $("#userinfo #firstname").val(info[dbFIRSTNAME]);
+                $("#userinfo #lastname").val(info[dbLASTNAME]);
+                $("#userinfo #email").val(info[dbEMAIL]);
+                $("#userinfo #phone").val(info[dbPHONE]);
+                $("#userinfo #thepoints").html(info[dbPOINTS]);
+                $("#userinfo #thevisits").html(info[dbLOGINS]);            
+
+                var ts = parseInt(info[dbLASTLOGIN],10)*1000;
+                $("#userinfo #lastlogin").prop("readonly", false).val(formatDate(ts)).prop("readonly", true);
+                var datediff = Date.now() - ts;
+                if( datediff < comeBackIn /*300000*/) {
+                    var t = Math.floor((comeBackIn - datediff) / 60000);
+                    $("#userinfo #comebackin").show();
+                    $("#userinfo #comebackin span").html( ((t > 0) ? t : "just a few moments"));
+                    theTimer = setInterval(function(){updateComeback();}, 10000 );
+                } else {
+                    newPointsOk=true;
+                }            
+            $("#page").fadeIn(250)
+            .promise()
+            .done(function() {
+                if( newPointsOk ) {
+                    addNewPoints();
+                }
+            });
+        });
     });
 }
 
 function updateComeback() {
-        var ts = parseInt(userInfo[dbLASTLOGIN],10)*1000;
-        var datediff = Date.now() - ts;
-        if( datediff < comeBackIn ) {
-            var t = Math.floor((comeBackIn - datediff) / 60000);
-            $("#userinfo #comebackin span").html(t);  
-        } else {
-            $("#userinfo #comebackin").html("Okay! It's time for more points!<br />Click on button, below, and re-enter your phone number!");
-        }
+    var ts = parseInt(userInfo[dbLASTLOGIN],10)*1000;
+    var datediff = Date.now() - ts;
+    if( datediff < comeBackIn ) {
+        var t = Math.floor((comeBackIn - datediff) / 60000);
+        $("#userinfo #comebackin span").html(t);  
+    } else {
+        $("#userinfo #comebackin").html("Okay! It's time for more points!<br />Click on button, below, and re-enter your phone number!");
+    }
 }
 
 /* Validate phone number */
@@ -153,9 +172,22 @@ function checkFormAndSave() {
     // Save the timestamp
     var ts = Math.round(Date.now() / 1000);
     $("input#timestamp").val(ts);
-    $.post("loyalty_procs.php", $("form#newuserform").serialize(), function(data) {
+    $.post(document.location.href + "js/loyalty_procs.php", $("form#newuserform").serialize(), function(data) {
        congratulate();
     });
+}
+
+function addNewPoints() {
+    // Save the timestamp
+    var ts = Math.round(Date.now() / 1000);
+    $("input#timestamp").val(ts);
+    $("#addnewpoints").val("20");
+    $.post(document.location.href + "js/loyalty_procs.php", $("form#userfoundform").serialize(), function(data) {
+        userInfo[dbPOINTS] = data;
+        $("#userinfo #thepoints").html(userInfo[dbPOINTS]);
+        $("#userinfo #thevisits").html(userInfo[dbLOGINS]);
+    });
+    
 }
 
 /* Nice going! */
