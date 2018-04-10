@@ -34,14 +34,14 @@ if(isset($_POST['phonenumber'])) {
     $l = $_POST['lastname'];
     $e = $_POST['email'];
     $p = $_POST['phone'];
-
+    $t = intval($_POST['timestamp']);
     $pts = 50;
     
     //echo $f, $l, $e, $p;
     //exit();
 
-    $stmt = $con->prepare("insert into users (firstname,lastname,email,phone,points) values(?,?,?,?,?)");
-    $stmt->bind_param("ssssi", $f,$l,$e,$p,$pts);
+    $stmt = $con->prepare("insert into users (firstname,lastname,email,phone,points,lastlogin) values(?,?,?,?,?,?)");
+    $stmt->bind_param("ssssii", $f,$l,$e,$p,$pts,$t);
     $stmt->execute();
     $stmt->close();
 

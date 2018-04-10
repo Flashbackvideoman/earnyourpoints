@@ -5,6 +5,7 @@
     <h3 style="margin-bottom: 10px;">Let's get started with some information we'll need:</h3>
     <form id="newuserform">
         <input type="hidden" name="newuser" id="newuser" value="newuser" />
+        <input type="hidden" name="timestamp" id="timestamp" />
         <table style="margin: 0 auto;"><tbody>
             <tr>
                 <td class="rightset">First name:</td><td><input type="text" id="firstname" name="firstname"/></td>
@@ -18,7 +19,7 @@
             </tr>
         </tbody></table>
         
-        <div class="centerdiv" style="margin-top: 20px;"><input class="widebtn" id="submitbtn" type="button" value="Submit" onclick="checkForm()"/></div>
+        <div class="centerdiv" style="margin-top: 20px;"><input class="widebtn" id="submitbtn" type="button" value="Submit" onclick="checkFormAndSave()"/></div>
         <div class="centerdiv" style="margin-top: 5px;">
             <input class="widebtn" id="gobackbtn" type="button" value="Enter a different phone number" onclick="loyalty_js_init()"/></div>
     </form>

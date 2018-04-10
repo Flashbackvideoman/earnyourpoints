@@ -11,7 +11,7 @@
     <title>Loyalty</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
-    <script src="js/dlgMaster.js"></script>
+   <!-- <script src="js/dlgMaster.js"></script> -->
     <script src="js/loyalty.js"></script>
     <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -74,8 +74,8 @@ function init() {
                 lastname VARCHAR(30),
                 email VARCHAR(50), 
                 phone VARCHAR(10),
-                points int(10),
-                lastlogin TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                points int(10) NOT NULL DEFAULT 0,
+                lastlogin bigint,
                 PRIMARY KEY (`logins`)
                 )";
         mysqli_query($con, $sql);

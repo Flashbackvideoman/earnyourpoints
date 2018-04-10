@@ -12,20 +12,36 @@ var dbPHONE = 4;
 var dbPOINTS = 5;
 var dbLASTLOGIN = 6;
 
+// Constants
+var comeBackIn = 300000;
+
+// Globals
+var theTimer;
+var userInfo;
+
 /* load up first screen */
 function loyalty_js_init() {
+    if(theTimer) {
+        
+    }
+    
     $.get("html/loyalty_search.html", {}, function(data) {
-        $("#page").html(data);   
-        $("#phonenum").get(0).focus();
-        $("#phonenum").on("keyup", function(e) {
-            if(e.keyCode === 13) {
-                var p=this.value;
-                if( (p = validatePhone(p, this)) !== "") {
-                    processPhone(p);
-                } else {
-                    alert("bad phone");
+        $("#page").fade(250, function() {
+            $("page").html(data).fadeIn(250, function() {
+                
+
+            $("#phonenum").get(0).focus();
+            $("#phonenum").on("keyup", function(e) {
+                if(e.keyCode === 13) {
+                    var p=this.value;
+                    if( (p = validatePhone(p, this)) !== "") {
+                        processPhone(p);
+                    } else {
+                         alert("bad phone");
+                    }
                 }
-            }
+            });
+}); 
         });
     });
 }
@@ -36,7 +52,8 @@ function processPhone(phone) {
         if(data.trim() === "") {
             userNotFound(phone);
         } else {
-            userFound(data.split("|"));
+            userInfo = data.split("|");
+            userFound(userInfo);
         }       
     });
 }
@@ -51,10 +68,10 @@ function userNotFound(phone) {
     });
 }
 
-
 /* user already in database */
 function userFound(info) {
     // load up found screen
+    clearInterval(theTimer);
     $.post("html/loyalty_found.html", {}, function(data) {
         $("#page").html(data); 
         $("#logo img").attr("src", "css/images/logged-button.png");
@@ -64,8 +81,31 @@ function userFound(info) {
         $("#userinfo #email").val(info[dbEMAIL]);
         $("#userinfo #phone").val(info[dbPHONE]);
         $("#userinfo #thepoints").html(info[dbPOINTS]);
-        var dt = info[dbLASTLOGIN];
+        
+        var ts = parseInt(info[dbLASTLOGIN],10)*1000;
+        $("#userinfo #lastlogin").prop("readonly", false).val(formatDate(ts)).prop("readonly", true);
+        var datediff = Date.now() - ts;
+        if( datediff < comeBackIn /*300000*/) {
+            var t = Math.floor((comeBackIn - datediff) / 60000);
+            $("#userinfo #comebackin").show();
+            $("#userinfo #comebackin span").html(t);
+            theTimer = setInterval(function(){updateComeback();}, 60000 );
+        } else {
+            
+        }        
+        
     });
+}
+
+function updateComeback() {
+        var ts = parseInt(userInfo[dbLASTLOGIN],10)*1000;
+        var datediff = Date.now() - ts;
+        if( datediff < comeBackIn ) {
+            var t = Math.floor((comeBackIn - datediff) / 60000);
+            $("#userinfo #comebackin span").html(t);  
+        } else {
+            $("#userinfo #comebackin").html("Okay! It's time for more points!<br />Click on button, below, and re-enter your phone number!");
+        }
 }
 
 /* Validate phone number */
@@ -110,7 +150,10 @@ function checkFormAndSave() {
         return;
     }     
 
-    $.post("loyalty_procs.php", $("form#newuserform").serialize(), function() {
+    // Save the timestamp
+    var ts = Math.round(Date.now() / 1000);
+    $("input#timestamp").val(ts);
+    $.post("loyalty_procs.php", $("form#newuserform").serialize(), function(data) {
        congratulate();
     });
 }
@@ -129,4 +172,19 @@ function isValidEmailAddress(emailAddress) {
     var pattern = new RegExp(/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/);
     return pattern.test(emailAddress);
 }
+
+function formatDate(timestamp) {
+    var d = new Date(timestamp);
+    var h = d.getHours();
+    var dn;
+    if(h > 12) {
+        h = h-12;
+        dn="PM";
+    } else {
+        dn = "AM";
+    }
+
+    return (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear() + ", " + h + ":" + d.getMinutes() + dn;
+}
+
 

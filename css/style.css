@@ -12,7 +12,9 @@ html {
     background: linear-gradient(135deg, rgba(30,87,153,1) 0%,rgba(71,129,187,0.7) 43%,rgba(125,185,232,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#007db9e8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
-
+input {
+    padding: 3px 5px;
+}
 #main {
     margin: 30px auto 0 auto;
     width: 800px;
@@ -57,13 +59,3 @@ html {
     padding: 5px
 }
 
-
-.ui-dialog-title-75-width { width: 75% !important; }
-
-.ui-dialog-titlebar { 
-    background-color: blue !important; color: #fff !important;}
-.ui-dialog-buttonpane, .ui-resizable-handle { background-color: blue !important; border: 1px solid blue !important;}
-
-#theDialogBox {
-    overflow-y:hidden;
-}
