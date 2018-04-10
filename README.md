@@ -29,6 +29,8 @@ If 5 minutes have not elapsed since your last entry for that phone number, you w
 
 An automatic minute to minute on-screen countdown will show you how much time you have left before you can successfully add more points.
 
+If audio is enabled on your computer, then short audio snippets will be played on errors or successful point accumulations.
+
 To run locally:  http://localhost/earnyourpoints
 
 
