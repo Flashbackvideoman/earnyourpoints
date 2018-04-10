@@ -15,7 +15,7 @@ If necessary, edit the file js/loyalty_globals.inc to change the following defau
  &ast;Note that the $DEVELOPMENT variable, if TRUE will turn off PHP warnings like mail errors if you do not have a working SMTP driver.*
 
 Requirements:
-- LAMP or WAMP stack
+- LAMP or WAMP stack (PHP7, MySQL, Apache, etc.)
 - SMTP services
 
 **Warning: SMTP server MUST be setup to successfully send mail via PHP**
