@@ -56,6 +56,24 @@ input {
 }
 .widebtn {
     width: 400px;
-    padding: 5px
+    padding: 5px;
 }
 
+.ui-dialog-title-75-width { 
+    width: 75% !important; 
+}
+
+.ui-dialog-titlebar { 
+    background: #7B9BBB !important; 
+    color: #fff !important;
+}
+.ui-dialog-buttonpane, .ui-resizable-handle { 
+    background: #7B9BBB !important;
+    border: 1px solid #7B9BBB !important;
+}
+.ui-dialog-buttonset button {
+    background: #4a719f !important; 
+}
+#theDialogBox {
+    overflow-y:hidden;
+}

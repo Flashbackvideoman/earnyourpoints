@@ -3,6 +3,8 @@
 "use strict";
 /*jshint unused:false*/
 
+/* globals messagesOut, dlgMaster */
+
 // db data offsets
 var dbLOGINS = 0;
 var dbFIRSTNAME = 1;
@@ -21,6 +23,7 @@ var userInfo;
 
 /* load up first screen */
 function loyalty_js_init() {
+
     if(theTimer) {
         clearInterval(theTimer);
         theTimer=null;
@@ -29,6 +32,7 @@ function loyalty_js_init() {
     $.get("html/loyalty_search.html", {}, function(data) {
         $("#page").fadeOut(250).promise()
         .done( function() {
+            $("#logo img").attr("src", "css/images/login-button.png");
             $("#page").html(data);  
             $("#page").fadeIn(250).promise()
             .done( function() {
@@ -39,7 +43,10 @@ function loyalty_js_init() {
                         if( (p = validatePhone(p, this)) !== "") {
                             processPhone(p);
                         } else {
-                             alert("bad phone");
+                            messagesOut("Not a valid phone number.<br />Please re-enter.<br /><br />You can enter almost anything,<br />as long as there are 10 total digits!", "#phonenum");
+                            loyalty_js_init();
+                            $("#phonenum").get(0).focus();
+                            return false;
                         }
                     }
                 });            
@@ -121,7 +128,7 @@ function updateComeback() {
     var datediff = Date.now() - ts;
     if( datediff < comeBackIn ) {
         var t = Math.floor((comeBackIn - datediff) / 60000);
-        $("#userinfo #comebackin span").html(t);  
+        $("#userinfo #comebackin span").html( ((t > 0) ? t : "just a few moments"));
     } else {
         $("#userinfo #comebackin").html("Okay! It's time for more points!<br />Click on button, below, and re-enter your phone number!");
     }
@@ -153,19 +160,19 @@ function checkFormAndSave() {
     if( first.length === 0 ||
         last.length === 0 ||
         email.length === 0 ) {
-            alert("Please fill out all of the information.");
+            messagesOut("Please fill out all of the requested information.");
             return;
     }
     if(!isValidEmailAddress(email)) {
-            alert("Please enter a valid Email address.");
+            messagesOut("Please enter a valid Email address.");
             return;     
     }
     var filter = /[.,\/#!$%\^&\*;:{}=\-_`~()]/;
     if( filter.test(first) ) {
-        alert("There are non-alphanumeric characters in the Firstname field.");
+        messagesOut("There are non-alphanumeric characters in the Firstname field.");
         return;
     } else if( filter.test(last) ) {
-        alert("There are non-alphanumeric characters in the Lastname field.");
+        messagesOut("There are non-alphanumeric characters in the Lastname field.");
         return;
     }     
 
@@ -184,14 +191,19 @@ function addNewPoints() {
     $("#addnewpoints").val("20");
     $.post(document.location.href + "js/loyalty_procs.php", $("form#userfoundform").serialize(), function(data) {
         userInfo[dbPOINTS] = data;
+        userInfo[dbPOINTS] = parseInt(userInfo[dbPOINTS],10) + 1;
         $("#userinfo #thepoints").html(userInfo[dbPOINTS]);
-        $("#userinfo #thevisits").html(userInfo[dbLOGINS]);
+        $("#userinfo #thevisits").html(parseInt(userInfo[dbLOGINS],10) + 1);
     });
-    
+    var snd = new Audio(document.location.href + 'audio/applause.mp3');    
+    snd.play();    
 }
 
 /* Nice going! */
 function congratulate() {
+    var snd = new Audio(document.location.href + 'audio/applause.mp3');    
+    snd.play();
+
     var h = "<div style='text-align:center;'><h1>Congratulations!</h1><p>You have earned 50 points to start you off!</p>" +
         '<div class="centerdiv" style="margin-top: 20px;">' +
         '<input class="widebtn" type="button" value="Enter another phone number" onclick="loyalty_js_init()" />' + 
@@ -219,4 +231,31 @@ function formatDate(timestamp) {
     return (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear() + ", " + h + ":" + d.getMinutes() + dn;
 }
 
+function messagesOut(message, ele) {
+    new dlgMaster({
+        modal       : true,                     // True if modal
+        resizable   : false,                    // True if resizable
+        src         : "earnyourpoints",                 // name calling function. Added to dialog CLASS
+        title       : "Alert!",                  // title
+        markup      : message,                // HTML content
+        width       : 400,
+        height      : "auto",
+        topOffset   : 0,
+        positionMy  : "center top",
+        positionAt  : 0,
+        collision   : null,
+        posParent   : "#page",
+        btn1        : "OK",         // Button 1 text
+        btn2        : null,
+        dfltbtn     : 1,      // 1 or 2 ( null || 0 || false === 1 )
+        doitbtn     : null,      // 1 (yes btn) or 2 (no btn)
+        excloseCB   : function() {
+            if(ele){
+                setTimeout(function() {$(ele).get(0).focus();}, 250);
+            }
+        }
+    });
+var snd = new Audio(document.location.href + 'audio/error.wav');    
+snd.play();
+}
 

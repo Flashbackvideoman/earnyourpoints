@@ -3,5 +3,5 @@
     $db = "loyaltydb";
     $con = mysqli_connect("localhost", "root", "");
 
-    $DEVELOPMENT = true;
+    $SENDMAIL = false;  //if false, mail will not be sent
 ?>

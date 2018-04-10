@@ -10,8 +10,9 @@
     <meta charset="utf-8">
     <title>Loyalty</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
-   <!-- <script src="js/dlgMaster.js"></script> -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="js/dlgMaster.js"></script>
     <script src="js/loyalty.js"></script>
     <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -69,18 +70,19 @@ function init() {
     if( !table_exists('users') ) {
         // Create table			
         $sql = "CREATE TABLE IF NOT EXISTS `users` (
-                logins int(11) NOT NULL AUTO_INCREMENT,
+                logins int(11) NOT NULL DEFAULT 1,
                 firstname VARCHAR(30),
                 lastname VARCHAR(30),
                 email VARCHAR(50), 
                 phone VARCHAR(10),
                 points int(10) NOT NULL DEFAULT 0,
                 lastlogin bigint,
-                PRIMARY KEY (`logins`)
+                PRIMARY KEY (`phone`)
                 )";
         mysqli_query($con, $sql);
     }
 }
+
 
 // Helper functions
 function table_exists($table) {
