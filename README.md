@@ -1,4 +1,4 @@
-#Test for Trybaker from Norm Strassner
+# Web application for Trybaker
 ## by Norman H. Strassner
 ### April, 2018
 
