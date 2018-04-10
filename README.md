@@ -20,7 +20,8 @@ Requirements:
 
 **Warning: SMTP server MUST be setup to successfully send mail via PHP**
 
-Upon startup, you will be prompted for a telephone number, which you can enter in almost any format.
+Upon startup, you will be prompted for a telephone number, which you can enter in almost any format, as long as there are 10 actual digits.  All other characters are discared.
+
 If the phone number was found not in the database, then you are prompted to enter your first and last name, and your email address.
 That, along with the phone number you entered will be saved and you will be given an initial 50 points.
 
