@@ -1,0 +1,27 @@
+<!-- loyalty_found.html -->
+
+<div id="userinfo" style="text-align: center;">
+    <h2 id="welcome"></h2>
+    <h3>Here is the information we have to date:</h3>
+        <table style="margin: 0 auto;"><tbody>
+            <tr>
+                <td class="rightset">First name:</td><td><input type="text" id="firstname" readonly/></td>
+                <td>&nbsp;&nbsp;&nbsp;</td>
+                <td class="rightset">Last name:</td><td><input type="text" id="lastname" readonly/></td>
+            </tr>
+
+            <tr>
+                <td class="rightset">Email Address:</td><td><input type="text" id="email" readonly/></td>
+            </tr>
+            <tr>
+                <td class="rightset">Phone:</td><td><input type="text" id="phone" readonly/></td>
+            </tr>
+         </tbody></table>        
+
+    <div style="margin-top:40px;font-size: 1.3em;">You have accumulated <span id="thepoints"></span> point(s)!</div>
+    
+    <div class="centerdiv" style="margin-top: 20px;">
+        <input class="widebtn" type="button" value="Enter a different phone number" onclick="loyalty_js_init()" />
+    </div>    
+    
+</div>

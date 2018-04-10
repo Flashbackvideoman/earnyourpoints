@@ -1,0 +1,69 @@
+@charset "utf-8";
+
+html {
+    height: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-repeat:no-repeat;
+    background: -moz-linear-gradient(-45deg, rgba(30,87,153,1) 0%, rgba(71,129,187,0.7) 43%, rgba(125,185,232,0) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, rgba(30,87,153,1) 0%,rgba(71,129,187,0.7) 43%,rgba(125,185,232,0) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, rgba(30,87,153,1) 0%,rgba(71,129,187,0.7) 43%,rgba(125,185,232,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#007db9e8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+#main {
+    margin: 30px auto 0 auto;
+    width: 800px;
+    height: 80px;
+    border-radius: 15px 15px 0 0; 
+    height: 100%;
+    padding: 20px;
+    background-color: #D3CCCC;
+    }
+#header {
+    background-color:blue;
+    height: 80px;
+    border-radius: 15px 15px 0 0;
+}
+#page {
+    border: 1px solid blue;
+    min-height: 340px;
+    border-radius: 0 0 15px 15px;
+}
+#logo span {
+    font-size: 3em;
+    color:#fff;
+    vertical-align:top;
+    margin-top:12px;
+    float:right;
+    margin-right: 30px;
+}
+#getinfo tr, #userinfo tr {
+    height: 30px !important;
+}
+#getinfo td {
+    padding-top: 15px;
+}
+.rightset {
+    text-align:right;
+}
+.centerdiv {
+    margin: 0 auto;
+}
+.widebtn {
+    width: 400px;
+    padding: 5px
+}
+
+
+.ui-dialog-title-75-width { width: 75% !important; }
+
+.ui-dialog-titlebar { 
+    background-color: blue !important; color: #fff !important;}
+.ui-dialog-buttonpane, .ui-resizable-handle { background-color: blue !important; border: 1px solid blue !important;}
+
+#theDialogBox {
+    overflow-y:hidden;
+}

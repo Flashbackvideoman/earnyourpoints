@@ -1,0 +1,25 @@
+<!-- loyalty_new.html -->
+
+<div id="getinfo" style="text-align: center;">
+    <h2>Welcome! We've not seen that phone number before.</h2>
+    <h3 style="margin-bottom: 10px;">Let's get started with some information we'll need:</h3>
+    <form id="newuserform">
+        <input type="hidden" name="newuser" id="newuser" value="newuser" />
+        <table style="margin: 0 auto;"><tbody>
+            <tr>
+                <td class="rightset">First name:</td><td><input type="text" id="firstname" name="firstname"/></td>
+                <td>&nbsp;&nbsp;&nbsp;</td>
+                <td class="rightset">Last name:</td><td><input type="text" id="lastname" name="lastname"/></td>
+            </tr>            <tr>
+                <td class="rightset">Email Address:</td><td><input type="text" id="email" name="email"/></td>
+            </tr>
+            <tr>
+                <td class="rightset">Phone:</td><td><input type="text" id="phone" name="phone" readonly/></td>
+            </tr>
+        </tbody></table>
+        
+        <div class="centerdiv" style="margin-top: 20px;"><input class="widebtn" id="submitbtn" type="button" value="Submit" onclick="checkForm()"/></div>
+        <div class="centerdiv" style="margin-top: 5px;">
+            <input class="widebtn" id="gobackbtn" type="button" value="Enter a different phone number" onclick="loyalty_js_init()"/></div>
+    </form>
+</div>
