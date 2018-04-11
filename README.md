@@ -12,11 +12,13 @@ When the application is run for the first time, it will setup a MySQL table for 
 If necessary, edit the file **js/loyalty_globals.inc** to change the following defaults:
 - $db = "loyaltydb";
 - $con = mysqli_connect("localhost", "root", "");
-- $SENDMAIL = false; &ast;
+- $SENDMAIL = true; &ast;
 
 &ast;Note that the $SENDMAIL variable, if false, will turn off sending mail and prevent PHP errors if you do not have a working SMTP driver installed and configured.
 
 **SMTP server MUST be setup to successfully send mail via PHP**
+
+If you do NOT have SMTP available, please set $SENDMAIL to false.
 
 *II. Requirements:*
 
