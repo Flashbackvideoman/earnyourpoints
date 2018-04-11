@@ -4,21 +4,26 @@
 
 **earnyourpoints is a web application built for BAKER as a work sample.**
 
-I. Installation
-Download the zip file from the archive and place the root directory from the zip file into your base www directory.
+*I. Installation*
 
-If necessary, edit the file js/loyalty_globals.inc to change the following defaults:
+Download the zip file from the archive and place the root directory from the zip file into your base www directory.
+When the application is run for the first time, it will setup a MySQL table for its own use.
+
+If necessary, edit the file **js/loyalty_globals.inc** to change the following defaults:
 -    $db = "loyaltydb";
 -    $con = mysqli_connect("localhost", "root", "");
 -   $DEVELOPMENT = false; *
  
- &ast;Note that the $DEVELOPMENT variable, if TRUE will turn off PHP warnings like mail errors if you do not have a working SMTP driver.*
+* &ast;Note that the $SENDMAIL variable, if false, will turn off sending mail and prevent PHP errors if you do not have a working SMTP driver installed and configured.
 
-Requirements:
+**SMTP server MUST be setup to successfully send mail via PHP**
+
+*II. Requirements:*
+
 - LAMP or WAMP stack (PHP7, MySQL, Apache, etc.)
 - SMTP services
 
-**Warning: SMTP server MUST be setup to successfully send mail via PHP**
+*III. Usage:*
 
 Upon startup, you will be prompted for a telephone number, which you can enter in almost any format, as long as there are 10 actual digits.  All other characters are discared.
 
