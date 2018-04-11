@@ -200,7 +200,7 @@ dlgMaster.theDialog = function() {
                         self.cbBtn2(dt);
                     }
                     if(self.excloseCB) {
-                        excloseCB();
+                        self.excloseCB();
                     }
                     $( "#theDialogBox" ).dialog( "close" ).remove();
                 }

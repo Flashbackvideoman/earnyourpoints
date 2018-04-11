@@ -33,6 +33,7 @@ function loyalty_js_init() {
         $("#page").fadeOut(250).promise()
         .done( function() {
             $("#logo img").attr("src", "css/images/login-button.png");
+            $("#logo span").html("Earn Your Points!");
             $("#page").html(data);  
             $("#page").fadeIn(250).promise()
             .done( function() {
@@ -195,15 +196,16 @@ function addNewPoints() {
         $("#userinfo #thepoints").html(userInfo[dbPOINTS]);
         $("#userinfo #thevisits").html(parseInt(userInfo[dbLOGINS],10) + 1);
     });
+    showGif();
     var snd = new Audio(document.location.href + 'audio/applause.mp3');    
     snd.play();    
 }
 
 /* Nice going! */
 function congratulate() {
+    showGif();
     var snd = new Audio(document.location.href + 'audio/applause.mp3');    
     snd.play();
-
     var h = "<div style='text-align:center;'><h1>Congratulations!</h1><p>You have earned 50 points to start you off!</p>" +
         '<div class="centerdiv" style="margin-top: 20px;">' +
         '<input class="widebtn" type="button" value="Enter another phone number" onclick="loyalty_js_init()" />' + 
@@ -259,3 +261,9 @@ var snd = new Audio(document.location.href + 'audio/error.wav');
 snd.play();
 }
 
+
+function showGif() {
+    var to;
+    $("#successgif").fadeIn(500);
+    setTimeout(function() {$("#successgif").fadeOut(500);clearTimeout(to);}, 3000);
+} 

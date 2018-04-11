@@ -35,8 +35,11 @@
         <div id="page">
 
         </div>
+        <div id="successgif"><img src="video/sc.gif"></div>
     </div>
-    
+    <footer>
+        <div>Copyright &copy;, 2018, Norman H. Strassner.  All rights reserved.</div>
+    </footer>
 <script>
     loyalty_js_init();
 </script>
@@ -82,7 +85,6 @@ function init() {
         mysqli_query($con, $sql);
     }
 }
-
 
 // Helper functions
 function table_exists($table) {
