@@ -192,7 +192,7 @@ function addNewPoints() {
     $("#addnewpoints").val("20");
     $.post(document.location.href + "js/loyalty_procs.php", $("form#userfoundform").serialize(), function(data) {
         userInfo[dbPOINTS] = data;
-        userInfo[dbPOINTS] = parseInt(userInfo[dbPOINTS],10) + 1;
+        userInfo[dbPOINTS] = parseInt(userInfo[dbPOINTS],10) + 20;
         $("#userinfo #thepoints").html(userInfo[dbPOINTS]);
         $("#userinfo #thevisits").html(parseInt(userInfo[dbLOGINS],10) + 1);
     });
@@ -263,6 +263,7 @@ snd.play();
 
 
 function showGif() {
+    return;
     var to;
     $("#successgif").fadeIn(500);
     setTimeout(function() {$("#successgif").fadeOut(500);clearTimeout(to);}, 3000);

@@ -21,10 +21,10 @@ if( isset($_REQUEST['addnewpoints']) && $_REQUEST['addnewpoints'] != "0") {
     $headers = "From: <noreply>@trybaker.com" . "\r\n" .
         "Reply-To: <noreply>@trybaker.com" . "\r\n" .
         "X-Mailer: PHP/" . phpversion();
-    if($SENDMAIL) {
+    echo $pts;
+    if($SENDMAIL) {  
         mail($to, $subject, $message, $headers);
     }
-    echo $pts;
    
 }  else if(isset($_REQUEST['newuser']) ){  
     $f = $_REQUEST['firstname'];
